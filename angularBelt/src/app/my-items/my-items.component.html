@@ -1,0 +1,58 @@
+<div>
+  <form (submit)="onSubmit(); formData.reset()" class="my-form" #formData='ngForm'>
+    <label>New Item:</label> 
+    <input 
+      type="text" 
+      name="item_content" 
+      required 
+      minlength="3" 
+      maxlength="200"
+      [(ngModel)]="new_item.item_content"
+      #item_contents='ngModel'
+    />
+    <span *ngIf = 'item_contents.dirty && item_contents.invalid' class="ng-invalid">
+      <span *ngIf = "item_contents.errors.required">An Item is required</span>
+      <span *ngIf = "item_contents.errors.minlength">Your Item must be at least 3 characters long.</span>
+    </span>
+    <input [disabled]="formData.invalid" type="submit" value='Add New Item'>
+  </form>
+</div>
+
+
+
+<div class="allitems">
+  <div *ngFor="let item of items | orderBy : createdAt" class="itemdetail">
+    <h5>Item: {{ item.createdAt | date:'medium' }}</h5>
+    <h4 class="itemcontent">{{ item.item_content }}</h4>
+    <button (click)="delete(item)">Delete</button>
+    <button (click)="item.isEditable = !item.isEditable; edit_item = item">Edit</button>
+    <button (click)="showOne(item)">Show</button>
+    <div *ngIf="item.isEditable">
+      <h5>UserEditComponent</h5>
+      <form (submit)="update(item)" class="my-form" #editformData='ngForm'>
+          <label>Edit Item:</label> 
+          <input 
+            type="text" 
+            name="item_content"
+            required 
+            minlength="3" 
+            maxlength="200"
+            [(ngModel)]="edit_item.item_content"
+            #edititem_contents='ngModel'
+          />
+          <span *ngIf = 'edititem_contents.dirty && edititem_contents.invalid' class="ng-invalid">
+            <span *ngIf = "edititem_contents.errors.required">An Item is required</span>
+            <span *ngIf = "edititem_contents.errors.minlength">Your Item must be at least 3 characters long.</span>
+          </span>
+          <input [disabled]="editformData.invalid" type="submit" value='Edit Item'>
+        </form>
+    </div>
+
+    <hr>
+  </div>
+</div>
+
+<div class="oneItem">
+  {{display_item | json}}
+
+</div>

@@ -1,11 +1,13 @@
 var mongoose = require('mongoose');
 var Item = mongoose.model('Item');
+var Question = mongoose.model('Question');
+var session = require('express-session');
 ////////if one to many be sure to include both up here/////
 
 
 module.exports = {
     showAll: function(req, res) {
-        Item.find({}, function(err, items) {
+        Question.find({}, function(err, items) {
             if(err) {
                 console.log("didn't get item data");
                 // res.send('did not work');
@@ -25,7 +27,9 @@ module.exports = {
                 // res.send({errors: item.errors});
             } else { // else console.log that we did well and then redirect to the root route
                 console.log('successfully added a Item!', item);
+                req.session.user = item._id;
                 // res.send('added a item!'+item);
+                console.log("session var saved",req.session)
                 res.json(item);
             }
         })
@@ -102,37 +106,38 @@ module.exports = {
 //             res.json(item);
 //         });
 //     },
-//     // route for creating one comment with the parent post id
-//     createSub: function(req,res) {
-//         Item.findOne({_id: req.params.id}, function(err, item){
-//             var subitem = new Subitem(req.body);
-//             subitem._item = item._id;
-//             item.subitem.push(subitem);
-//             subitem.save(function(err){
-//                 if(err) {
-//                     console.log('Error********------>', err.errors);
-//                     // myerrors = err.errors
-//                     // res.render('index',{errors: err.errors});
-//                     // res.redirect('/');
-//                 }
-//                 else {
-//                     item.save(function(err){
-//                             if(err) { 
-//                                 console.log('Error********------>', err.errors);
-//                                 // myerrors = err.errors
-//                                 // res.render('index',{errors: err.errors});
-//                                 // res.redirect('/');
-//                             } 
-//                             else { 
-//                                 myerrors = [];
-//                                 console.log('saved a new comment', item)
-//                                 // res.redirect('/'); 
-//                             }
-//                     });
-//                 }
-//             });
-//         });
-//     }
+    // route for creating one comment with the parent post id
+    createSub: function(req,res) {
+        Item.findOne({_id: req.session.user}, function(err, item){
+            var subitem = new Question(req.body);
+            console.log("got item back",req.session.user);
+            subitem._item = item._id;
+            item.questions.push(subitem);
+            subitem.save(function(err){
+                if(err) {
+                    console.log('Error********------>', err.errors);
+                    // myerrors = err.errors
+                    // res.render('index',{errors: err.errors});
+                    // res.redirect('/');
+                }
+                else {
+                    item.save(function(err){
+                            if(err) { 
+                                console.log('Error********------>', err.errors);
+                                // myerrors = err.errors
+                                // res.render('index',{errors: err.errors});
+                                // res.redirect('/');
+                            } 
+                            else { 
+                                myerrors = [];
+                                console.log('saved a new comment', item)
+                                // res.redirect('/'); 
+                            }
+                    });
+                }
+            });
+        });
+    }
 
 
 

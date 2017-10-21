@@ -1,0 +1,125 @@
+<div><a [routerLink]="['/dashboard']">Cancel</a></div>
+
+
+<div><h5>Put the question and options here:</h5></div>
+
+<div>
+  <form (submit)="onSubmit(); formData.reset()" class="my-form" #formData='ngForm'>
+    <label>Question:</label> 
+    <input 
+      type="text" 
+      name="question_content" 
+      required 
+      minlength="8" 
+      maxlength="200"
+      [(ngModel)]="new_question.question_content"
+      #question_contents='ngModel'
+    />
+    <span *ngIf = 'question_contents.dirty && question_contents.invalid' class="ng-invalid">
+      <span *ngIf = "question_contents.errors.required">A question is required</span>
+      <span *ngIf = "question_contents.errors.minlength">Your question must be at least 8 characters long.</span>
+    </span>
+
+    <label>Option 1:</label> 
+    <input 
+      type="text" 
+      name="option1" 
+      required 
+      minlength="3" 
+      maxlength="200"
+      [(ngModel)]="new_question.option1.text"
+      #option1s='ngModel'
+    />
+    <span *ngIf = 'option1s.dirty && option1s.invalid' class="ng-invalid">
+      <span *ngIf = "option1s.errors.required">A poll option is required</span>
+      <span *ngIf = "option1s.errors.minlength">Your poll option must be at least 3 characters long.</span>
+    </span>
+
+    <label>Option 2:</label> 
+    <input 
+      type="text" 
+      name="option2" 
+      required 
+      minlength="3" 
+      maxlength="200"
+      [(ngModel)]="new_question.option2.text"
+      #option2s='ngModel'
+    />
+    <span *ngIf = 'option2s.dirty && option2s.invalid' class="ng-invalid">
+      <span *ngIf = "option2s.errors.required">A poll option is required</span>
+      <span *ngIf = "option2s.errors.minlength">Your poll option must be at least 3 characters long.</span>
+    </span>
+
+    <label>Option 3:</label> 
+    <input 
+      type="text" 
+      name="option3" 
+      required 
+      minlength="3" 
+      maxlength="200"
+      [(ngModel)]="new_question.option3.text"
+      #option3s='ngModel'
+    />
+    <span *ngIf = 'option3s.dirty && option3s.invalid' class="ng-invalid">
+      <span *ngIf = "option3s.errors.required">A poll option is required</span>
+      <span *ngIf = "option3s.errors.minlength">Your poll option must be at least 3 characters long.</span>
+    </span>
+
+    <label>Option 4:</label> 
+    <input 
+      type="text" 
+      name="option4" 
+      required 
+      minlength="3" 
+      maxlength="200"
+      [(ngModel)]="new_question.option4.text"
+      #option4s='ngModel'
+    />
+    <span *ngIf = 'option4s.dirty && option4s.invalid' class="ng-invalid">
+      <span *ngIf = "option4s.errors.required">A poll option is required</span>
+      <span *ngIf = "option4s.errors.minlength">Your poll option must be at least 3 characters long.</span>
+    </span>
+
+
+    <input [disabled]="formData.invalid" type="submit" value='Create Poll'>
+  </form>
+</div>
+
+
+
+<!-- <div class="allitems">
+  <div *ngFor="let item of items | orderBy : createdAt" class="itemdetail">
+    <h5>Item: {{ item.createdAt | date:'medium' }}</h5>
+    <h4 class="itemcontent">{{ item.item_content }}</h4>
+    <button (click)="delete(item)">Delete</button>
+    <button (click)="item.isEditable = !item.isEditable; edit_item = item">Edit</button>
+    <button (click)="showOne(item)">Show</button>
+    <div *ngIf="item.isEditable">
+      <h5>UserEditComponent</h5>
+      <form (submit)="update(item)" class="my-form" #editformData='ngForm'>
+          <label>Edit Item:</label> 
+          <input 
+            type="text" 
+            name="item_content"
+            required 
+            minlength="3" 
+            maxlength="200"
+            [(ngModel)]="edit_item.item_content"
+            #edititem_contents='ngModel'
+          />
+          <span *ngIf = 'edititem_contents.dirty && edititem_contents.invalid' class="ng-invalid">
+            <span *ngIf = "edititem_contents.errors.required">An Item is required</span>
+            <span *ngIf = "edititem_contents.errors.minlength">Your Item must be at least 3 characters long.</span>
+          </span>
+          <input [disabled]="editformData.invalid" type="submit" value='Edit Item'>
+        </form>
+    </div>
+
+    <hr>
+  </div>
+</div>
+
+<div class="oneItem">
+  {{display_item | json}}
+
+</div> -->

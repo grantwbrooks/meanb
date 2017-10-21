@@ -37,10 +37,11 @@ module.exports = function(app) {
 //     app.get('/itemwsubs/:id', function (req, res){
 //         items.showItemWsubs(req, res)
 //     })
-//     // route for creating one comment with the parent post id
-//     app.post('/createsub/:id', function (req, res){
-//         items.createSub(req, res)
-//     })
+    // route for creating one comment with the parent post id
+    app.post('/createsub', function (req, res){
+        console.log("got in ehereardsfafd",req.session)
+        items.createSub(req, res)
+    })
 
 
     // Be sure to put as final route so if none of these match we go to Angular routes

@@ -1,0 +1,21 @@
+<div>
+  <form (submit)="onSubmit(); formData.reset()" class="my-form" #formData='ngForm'>
+    <label>Your Name:</label> 
+    <input 
+      type="text" 
+      name="item_content" 
+      required 
+      minlength="3" 
+      maxlength="200"
+      [(ngModel)]="new_item.item_content"
+      #item_contents='ngModel'
+    />
+    <span *ngIf = 'item_contents.dirty && item_contents.invalid' class="ng-invalid">
+      <span *ngIf = "item_contents.errors.required">A Name is required</span>
+      <span *ngIf = "item_contents.errors.minlength">Your Name must be at least 3 characters long.</span>
+    </span>
+    <input [disabled]="formData.invalid" type="submit" value='Login'>
+  </form>
+</div>
+
+

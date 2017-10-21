@@ -6,11 +6,24 @@ import { Item } from './item';
 export class ItemService {
 
   items = [];
+  current_question_id = "";
 
   constructor(private _http: Http) { }
 
   createItem(item, callback, errorback) {
     this._http.post('/items', item).subscribe( 
+      (response) => { 
+        callback(response.json());
+       }, // <— first method
+      (error) => { 
+        errorback();
+        console.log(error);
+       } // <— second method
+    );
+  }
+
+  createSub(item, callback, errorback) {
+    this._http.post('/createsub', item).subscribe( 
       (response) => { 
         callback(response.json());
        }, // <— first method

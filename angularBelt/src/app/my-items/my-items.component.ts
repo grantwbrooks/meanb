@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from './../item';
+import { Question } from './../question';
 import { ItemService } from './../item.service';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -10,22 +12,25 @@ import { ItemService } from './../item.service';
 })
 export class MyItemsComponent implements OnInit {
 
+  questions = [];
+  search_content = "";
+
   new_item = new Item();
   items = [];
 
   edit_item = new Item();
   display_item = new Item();
 
-  constructor(private _itemService: ItemService) { }
-
+  constructor(private _itemService: ItemService, private router: Router) { }
+  
   ngOnInit() {
     this.show();
   }
 
   show() {
     this._itemService.showItems((res) => { //callback is here
-      this.items = res
-      console.log(this.items)
+      this.questions = res
+      console.log(this.questions)
     },() => { //errorback function this is the second parameter of retrieveTasks
       console.log("error something")
     });

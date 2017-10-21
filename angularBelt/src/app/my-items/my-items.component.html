@@ -1,24 +1,49 @@
-<div>
-  <form (submit)="onSubmit(); formData.reset()" class="my-form" #formData='ngForm'>
-    <label>New Item:</label> 
+<div><a [routerLink]="['/create']">Create a New Poll</a>  <a [routerLink]="['/logout']">Logout</a></div>
+<div><h5>Current Polls:</h5></div>
+
+<div class="searchbar">
+  <form (submit)="onSubmit(); formData.reset()" class="my-form" #searchData='ngForm'>
+    <label></label> 
     <input 
       type="text" 
-      name="item_content" 
+      name="search_content" 
       required 
       minlength="3" 
       maxlength="200"
-      [(ngModel)]="new_item.item_content"
-      #item_contents='ngModel'
+      [(ngModel)]="search_content"
+      #search_contents='ngModel'
     />
-    <span *ngIf = 'item_contents.dirty && item_contents.invalid' class="ng-invalid">
-      <span *ngIf = "item_contents.errors.required">An Item is required</span>
-      <span *ngIf = "item_contents.errors.minlength">Your Item must be at least 3 characters long.</span>
-    </span>
-    <input [disabled]="formData.invalid" type="submit" value='Add New Item'>
+    <!-- <span *ngIf = 'search_contents.dirty && search_contents.invalid' class="ng-invalid">
+      <span *ngIf = "search_contents.errors.required">An Item is required</span>
+      <span *ngIf = "search_contents.errors.minlength">Your Item must be at least 3 characters long.</span>
+    </span> -->
+    <!-- <input [disabled]="searchData.invalid" type="submit" value='Add New Item'> -->
   </form>
 </div>
 
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Survey Question</th>
+        <th>Date Posted</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let question of questions">
+        <td>{{question._id}}</td>
+        <td><a [routerLink]="['/poll',question._id]">{{question.question_content}}</a></td>
+        <td>{{question.createdAt}}</td>
+        <td><button (click)="delete(item)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+
+<!-- 
 
 <div class="allitems">
   <div *ngFor="let item of items | orderBy : createdAt" class="itemdetail">
@@ -55,4 +80,4 @@
 <div class="oneItem">
   {{display_item | json}}
 
-</div>
+</div> -->

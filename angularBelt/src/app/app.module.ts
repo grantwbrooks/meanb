@@ -8,13 +8,19 @@ import { MyItemsComponent } from './my-items/my-items.component';
 import { FormsModule } from '@angular/forms'; // <-- Import FormsModule
 import { HttpModule } from '@angular/http'; // <-- Import HttpModule
 import { ItemService } from './item.service';
-import { OrderByPipe } from './order-by.pipe'; // <-- Imported
+import { OrderByPipe } from './order-by.pipe';
+import { LoginComponent } from './login/login.component';
+import { PollComponent } from './poll/poll.component';
+import { CreateComponent } from './create/create.component'; // <-- Imported
 
 @NgModule({
   declarations: [
     AppComponent,
     MyItemsComponent,
-    OrderByPipe
+    OrderByPipe,
+    LoginComponent,
+    PollComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,

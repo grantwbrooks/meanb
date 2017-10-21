@@ -1,5 +1,7 @@
 // Require the Express Module
 var express = require('express');
+//sessions
+var session = require('express-session');
 // Create an Express App
 var app = express();
 
@@ -7,10 +9,9 @@ var app = express();
 // let morgan = require("morgan");
 // app.use(morgan('dev'));
 
-// //sessions
-// var session = require('express-session');
-// app.use(session({secret: 'codingdojorocks'}));  // string for encryption
-// // this is how you use sessions in a function: req.session.name = req.body.name;
+
+app.use(session({secret: 'grantssecretcode'}));  // string for encryption
+// this is how you use sessions in a function: req.session.name = req.body.name;
 
 
 // Require body-parser (to receive post data from clients)

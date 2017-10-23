@@ -25,6 +25,7 @@ var ItemSchema = new mongoose.Schema({
 // define Comment Schema
 var QuestionSchema = new mongoose.Schema({
     _item: {type: Schema.Types.ObjectId, ref: 'Item'},
+    name: {type: String, required: true },
     question_content: {type: String, required: true },
     option1: {type: {}, required: true, minlength: 3},
     option2: {type: {}, required: true, minlength: 3},

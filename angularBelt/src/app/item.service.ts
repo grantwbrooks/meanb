@@ -7,12 +7,15 @@ export class ItemService {
 
   items = [];
   current_question_id = "";
+  loggedUserId = "";
 
   constructor(private _http: Http) { }
 
   createItem(item, callback, errorback) {
     this._http.post('/items', item).subscribe( 
       (response) => { 
+        this.loggedUserId = response.json()._id;
+        console.log("this user id-----------234---asdf-f>", this.loggedUserId)
         callback(response.json());
        }, // <— first method
       (error) => { 
@@ -64,7 +67,7 @@ export class ItemService {
   updateItem(item, new_item, callback, errorback){
     this._http.put("/items/"+item._id, new_item).subscribe( 
       (response) => {
-        callback();
+        callback(response.json());
         console.log("got in here");
        }, // <— first method
       (error) => { 
@@ -76,10 +79,10 @@ export class ItemService {
 
 
   showItem(item, callback, errorback) {
-    this._http.get('/item/'+item._id).subscribe( 
+    this._http.get('/item/'+item).subscribe( 
       (response) => {
         callback(response.json());
-        console.log("got in here");
+        console.log("got in here",response.json());
        }, // <— first method
       (error) => { 
         errorback();

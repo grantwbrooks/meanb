@@ -15,7 +15,22 @@
       <tr>
         <td>{{current_question.option1.text}}</td>
         <td>{{current_question.option1.count}}</td>
-        <td><button (click)="vote(current_question)">Vote</button></td>
+        <td><button (click)="vote(current_question.option1)">Vote</button></td>
+      </tr>
+      <tr>
+        <td>{{current_question.option2.text}}</td>
+        <td>{{current_question.option2.count}}</td>
+        <td><button (click)="vote(current_question.option2)">Vote</button></td>
+      </tr>
+      <tr>
+        <td>{{current_question.option3.text}}</td>
+        <td>{{current_question.option3.count}}</td>
+        <td><button (click)="vote(current_question.option3)">Vote</button></td>
+      </tr>
+      <tr>
+        <td>{{current_question.option4.text}}</td>
+        <td>{{current_question.option4.count}}</td>
+        <td><button (click)="vote(current_question.option4)">Vote</button></td>
       </tr>
     </tbody>
   </table>

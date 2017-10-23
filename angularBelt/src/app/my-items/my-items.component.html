@@ -1,4 +1,4 @@
-<div><a [routerLink]="['/create']">Create a New Poll</a>  <a [routerLink]="['/logout']">Logout</a></div>
+<div><a [routerLink]="['/create']">Create a New Poll</a>  <a href="/logout">Logout</a></div>
 <div><h5>Current Polls:</h5></div>
 
 <div class="searchbar">
@@ -33,10 +33,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let question of questions">
-        <td>{{question._id}}</td>
+        <td>{{question.name}}</td>
         <td><a [routerLink]="['/poll',question._id]">{{question.question_content}}</a></td>
         <td>{{question.createdAt}}</td>
-        <td><button (click)="delete(item)">Delete</button></td>
+        <td *ngIf = 'question._item == loggedUserId'><button (click)="delete(item)">Delete</button></td>
+        <!-- <td>{{question | json}}</td> -->
       </tr>
     </tbody>
   </table>

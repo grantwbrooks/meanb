@@ -21,10 +21,16 @@ export class MyItemsComponent implements OnInit {
   edit_item = new Item();
   display_item = new Item();
 
+  // loggedInUser = req.session.name; // not using this now
+  loggedUserId = "";
+  
+
   constructor(private _itemService: ItemService, private router: Router) { }
   
   ngOnInit() {
     this.show();
+    this.loggedUserId = this._itemService.loggedUserId
+    
   }
 
   show() {

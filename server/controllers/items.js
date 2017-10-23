@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Item = mongoose.model('Item');
 var Question = mongoose.model('Question');
-var session = require('express-session');
+// var session = require('express-session');
 ////////if one to many be sure to include both up here/////
 
 
@@ -13,6 +13,7 @@ module.exports = {
                 // res.send('did not work');
             } else {
                 console.log("got item data");
+                console.log("this is the user seesion",req.session);
                 res.json(items);
             }
         })
@@ -27,7 +28,8 @@ module.exports = {
                 // res.send({errors: item.errors});
             } else { // else console.log that we did well and then redirect to the root route
                 console.log('successfully added a Item!', item);
-                req.session.user = item._id;
+                console.log("before session name set",req.session)
+                req.session.name = item._id;
                 // res.send('added a item!'+item);
                 console.log("session var saved",req.session)
                 res.json(item);
@@ -39,11 +41,10 @@ module.exports = {
 
 
 
-
     showItem: function(req, res) {
         console.log("item id-----"+"ObjectId('"+req.params.id+"')")
         // Fish.find({_id:"ObjectId('"+req.params.id+"')"}, function(err, fishies) {
-        Item.findOne({_id: req.params.id}, function(err, item) {
+            Question.findOne({_id:req.params.id}, function(err, item) {
             if(err) {
                 console.log("didn't get item data");
                 // res.send('can not show item');
@@ -53,6 +54,7 @@ module.exports = {
             }
         })
     },
+    
     updateItem: function(req, res) {
         console.log("POST DATA-----", req.body);
         console.log("ID", req.params.id);
@@ -71,7 +73,7 @@ module.exports = {
         //     })    
         // })
     // try another way with update method instead:
-        Item.update({_id:req.params.id}, req.body, function(err, item) {
+        Question.update({_id:req.params.id}, req.body, function(err, item) {
             if(err) {
                 console.log('something went wrong saving item');
                 console.log(err.errors);
@@ -82,6 +84,8 @@ module.exports = {
             }
         })
     },
+
+    
     deleteItem: function(req, res) {
         console.log("ID", req.params.id);
         Item.remove({_id: req.params.id}, function(err) {
@@ -108,10 +112,11 @@ module.exports = {
 //     },
     // route for creating one comment with the parent post id
     createSub: function(req,res) {
-        Item.findOne({_id: req.session.user}, function(err, item){
+        Item.findOne({_id: req.session.name}, function(err, item){
             var subitem = new Question(req.body);
-            console.log("got item back",req.session.user);
+            console.log("got item back",req.session.name);
             subitem._item = item._id;
+            subitem.name = item.item_content;
             item.questions.push(subitem);
             subitem.save(function(err){
                 if(err) {
@@ -137,7 +142,14 @@ module.exports = {
                 }
             });
         });
-    }
+    },
+
+    logout: (req, res) => {
+		req.session.destroy()
+		res.redirect("/")
+	}
+
+
 
 
 

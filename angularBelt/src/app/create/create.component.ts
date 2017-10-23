@@ -21,6 +21,7 @@ export class CreateComponent implements OnInit {
 
   onSubmit(){
     this.router.navigate(["/dashboard"])
+    
     // this.user_service.create(this.new_user)
     //   .then(() => this.router.navigate(["/dashboard"]) )
     //   .catch(err => console.log("user login error", err))

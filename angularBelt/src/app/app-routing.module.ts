@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'dashboard', pathMatch: 'full', component: MyItemsComponent },
   { path: 'poll/:id', component: PollComponent },
   { path: 'create', pathMatch: 'full', component: CreateComponent },
-  { path: 'logout', pathMatch: 'full', redirectTo: '/' },
+  // { path: 'logout', pathMatch: 'full', redirectTo: '/' },
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 var items = require('../controllers/items.js')
 var path = require('path');
+// var session = require('express-session');
 
 module.exports = function(app) {
     // Routes
@@ -42,6 +43,8 @@ module.exports = function(app) {
         console.log("got in ehereardsfafd",req.session)
         items.createSub(req, res)
     })
+
+    app.get("/logout", items.logout)
 
 
     // Be sure to put as final route so if none of these match we go to Angular routes

@@ -11,7 +11,8 @@ import { ItemService } from './item.service';
 import { OrderByPipe } from './order-by.pipe';
 import { LoginComponent } from './login/login.component';
 import { PollComponent } from './poll/poll.component';
-import { CreateComponent } from './create/create.component'; // <-- Imported
+import { CreateComponent } from './create/create.component';
+import { FilterPipe } from './filter.pipe'; // <-- Imported
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CreateComponent } from './create/create.component'; // <-- Imported
     OrderByPipe,
     LoginComponent,
     PollComponent,
-    CreateComponent
+    CreateComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

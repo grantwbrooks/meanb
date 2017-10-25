@@ -16,19 +16,20 @@ export class CreateComponent implements OnInit {
   constructor(private _itemService: ItemService, private router: Router) { }
   
   ngOnInit() {
-    console.log("oninit",this.new_question)
+    if(this._itemService.loggedUserId == null){
+      this.router.navigate(["/"])
+    }
+    else {
+      console.log("oninit",this.new_question)
+    }
   }
 
   onSubmit(){
-    this.router.navigate(["/dashboard"])
-    
-    // this.user_service.create(this.new_user)
-    //   .then(() => this.router.navigate(["/dashboard"]) )
-    //   .catch(err => console.log("user login error", err))
-
     console.log("before this note",this.new_question);
-    this._itemService.createSub(this.new_question, (res) => { //callback is here
-      console.log(this.new_question);
+    
+    this._itemService.createSub(this.new_question, (res) => {
+      this.router.navigate(["/dashboard"]);
+      console.log("in on submit callback",this.new_question);
     },() => { //errorback function this is the second parameter of retrieveTasks
       console.log("error something");
     });

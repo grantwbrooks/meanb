@@ -55,12 +55,25 @@ module.exports = {
         })
     },
     
-    updateItem: function(req, res) {
+    updateQuestion: function(req, res) {
         console.log("POST DATA-----", req.body);
         console.log("ID", req.params.id);
+
+        Question.update({_id:req.params.id}, req.body, function(err, item) {
+            if(err) {
+                console.log('something went wrong saving item');
+                console.log(err.errors);
+                // res.send(err.errors);
+            } else { // else console.log that we did well and then redirect to the root route
+                console.log('successfully updated a item!');
+                res.json(item);
+            }
+        })
+        // try another way with update method instead:
+        ///////////////////////////////////////////////////
         // Fish.findOne({_id:req.params.id}, function(err, fishy) {
-        //     fishy.name = req.body.name;
-        //     fishy.length = req.body.length;
+            //     fishy.name = req.body.name;
+            //     fishy.length = req.body.length;
         //     fishy.save(function(err){
         //         if(err) {
         //             console.log('something went wrong saving user');
@@ -72,23 +85,12 @@ module.exports = {
         //         }
         //     })    
         // })
-    // try another way with update method instead:
-        Question.update({_id:req.params.id}, req.body, function(err, item) {
-            if(err) {
-                console.log('something went wrong saving item');
-                console.log(err.errors);
-                // res.send(err.errors);
-            } else { // else console.log that we did well and then redirect to the root route
-                console.log('successfully updated a item!');
-                res.json(item);
-            }
-        })
     },
 
-    
+
     deleteItem: function(req, res) {
         console.log("ID", req.params.id);
-        Item.remove({_id: req.params.id}, function(err) {
+        Question.remove({_id: req.params.id}, function(err) {
             if(err) {
                 console.log('something went wrong deleting a item');
                 console.log(err.errors);
@@ -110,9 +112,10 @@ module.exports = {
 //             res.json(item);
 //         });
 //     },
-    // route for creating one comment with the parent post id
+    
+// route for creating one comment with the parent post id    
     createSub: function(req,res) {
-        Item.findOne({_id: req.session.name}, function(err, item){
+        Item.findOne({_id: req.params.id}, function(err, item){
             var subitem = new Question(req.body);
             console.log("got item back",req.session.name);
             subitem._item = item._id;
@@ -136,6 +139,7 @@ module.exports = {
                             else { 
                                 myerrors = [];
                                 console.log('saved a new comment', item)
+                                res.json(item);
                                 // res.redirect('/'); 
                             }
                     });

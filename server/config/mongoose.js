@@ -5,6 +5,7 @@ var fs = require('fs');
 // require path for getting the models path
 var path = require('path');
 // connect to mongoose!
+//Create DB name here:
 mongoose.connect('mongodb://localhost/beltData');
 // create a variable that points to the path where all of the models live
 var models_path = path.join(__dirname, './../models');

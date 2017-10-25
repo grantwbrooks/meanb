@@ -23,14 +23,23 @@ export class MyItemsComponent implements OnInit {
 
   // loggedInUser = req.session.name; // not using this now
   loggedUserId = "";
+  loggedUserName = "";
+
+  // searchText = "";  //thought it was needed but isn't
   
 
   constructor(private _itemService: ItemService, private router: Router) { }
   
   ngOnInit() {
-    this.show();
-    this.loggedUserId = this._itemService.loggedUserId
-    
+    if(this._itemService.loggedUserId == null){
+      this.router.navigate(["/"])
+    }
+    else {
+      this.show();
+      this.loggedUserName = this._itemService.getUser();
+      // this.loggedUserName = this._itemService.loggedUserName
+      console.log("It is right ehere",this.loggedUserName)
+    }
   }
 
   show() {
@@ -42,52 +51,64 @@ export class MyItemsComponent implements OnInit {
     });
     console.log("this notes array filled up",this.items);
   }
+  // //promised way
+  // show() {
+  //   this._itemService.showItems()
+  //   .then( (res) => {console.log(res)
+  //     this.questions = res;
+  //   })
+  //   .catch( err => 
+  //       console.log(err)
+  //      )
+  // }
 
-  onSubmit(){
-    //hit service
-    console.log("before this note",this.new_item);
-    this._itemService.createItem(this.new_item, (res) => { //callback is here
-      console.log(this.new_item);
+  delete(question){
+    this._itemService.deleteItem(question, (res) => { //callback is here
+      console.log("delete this question right here",question);
     },() => { //errorback function this is the second parameter of retrieveTasks
       console.log("error something");
     });
-    console.log("this note",this.new_item);
-    this.new_item = new Item();
-    console.log("cleared this note",this.new_item);
-
     this.show();
   }
 
-  delete(item){
-    this._itemService.deleteItem(item, (res) => { //callback is here
-      console.log("right here",item);
-    },() => { //errorback function this is the second parameter of retrieveTasks
-      console.log("error something");
-    });
 
-    this.show();
-  }
 
-  update(item){
-    item.isEditable = false;
-    this._itemService.updateItem(item, this.edit_item, (res) => { //callback is here
-      console.log(this.edit_item);
-    },() => { //errorback function this is the second parameter of retrieveTasks
-      console.log("error something");
-    });
-    console.log("this note",this.edit_item);
+/////// not using the following on this page, leftover stuff for reference:
+//   onSubmit(){
+//     //hit service
+//     console.log("before this note",this.new_item);
+//     this._itemService.createItem(this.new_item, (res) => { //callback is here
+//       console.log(this.new_item);
+//     },() => { //errorback function this is the second parameter of retrieveTasks
+//       console.log("error something");
+//     });
+//     console.log("this note",this.new_item);
+//     this.new_item = new Item();
+//     console.log("cleared this note",this.new_item);
 
-    this.show();
-  }
+//     this.show();
+//   }
 
-  showOne(item) {
-    this._itemService.showItem(item, (res) => { //callback is here
-      this.display_item = res
-    },() => { //errorback function this is the second parameter of retrieveTasks
-      console.log("error something")
-    });
-    console.log("this is one item",this.display_item);
-  }
+//   update(item){
+//     item.isEditable = false;
+//     this._itemService.updateItem(item, this.edit_item, (res) => { //callback is here
+//       console.log(this.edit_item);
+//     },() => { //errorback function this is the second parameter of retrieveTasks
+//       console.log("error something");
+//     });
+//     console.log("this note",this.edit_item);
+
+//     this.show();
+//   }
+
+//   showOne(item) {
+//     this._itemService.showItem(item, (res) => { //callback is here
+//       this.display_item = res
+//     },() => { //errorback function this is the second parameter of retrieveTasks
+//       console.log("error something")
+//     });
+//     console.log("this is one item",this.display_item);
+//   }
 
 
 }

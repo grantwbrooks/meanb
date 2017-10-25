@@ -26,7 +26,12 @@ export class PollComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showOne(this.question_id)
+    if(this._itemService.loggedUserId == null){
+      this.router.navigate(["/"])
+    }
+    else {
+      this.showOne(this.question_id)
+    }
   }
 
   showOne(question) {

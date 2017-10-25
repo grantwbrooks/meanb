@@ -1,7 +1,7 @@
 <div><a [routerLink]="['/create']">Create a New Poll</a>  <a href="/logout">Logout</a></div>
 <div><h5>Current Polls:</h5></div>
 
-<div class="searchbar">
+<!-- <div class="searchbar">
   <form (submit)="onSubmit(); formData.reset()" class="my-form" #searchData='ngForm'>
     <label></label> 
     <input 
@@ -12,14 +12,16 @@
       maxlength="200"
       [(ngModel)]="search_content"
       #search_contents='ngModel'
-    />
+    /> -->
     <!-- <span *ngIf = 'search_contents.dirty && search_contents.invalid' class="ng-invalid">
       <span *ngIf = "search_contents.errors.required">An Item is required</span>
       <span *ngIf = "search_contents.errors.minlength">Your Item must be at least 3 characters long.</span>
     </span> -->
     <!-- <input [disabled]="searchData.invalid" type="submit" value='Add New Item'> -->
-  </form>
-</div>
+  <!-- </form>
+</div> -->
+
+<input [(ngModel)]="searchText" placeholder="search for questions">
 
 <div class="container">
   <table>
@@ -32,16 +34,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let question of questions">
+      <tr *ngFor="let question of questions | filter : searchText">
         <td>{{question.name}}</td>
         <td><a [routerLink]="['/poll',question._id]">{{question.question_content}}</a></td>
         <td>{{question.createdAt}}</td>
-        <td *ngIf = 'question._item == loggedUserId'><button (click)="delete(item)">Delete</button></td>
+        <td *ngIf = 'question.name == loggedUserName'><button (click)="delete(question)">Delete</button></td>
         <!-- <td>{{question | json}}</td> -->
       </tr>
     </tbody>
   </table>
 </div>
+
+
+
 
 
 <!-- 
